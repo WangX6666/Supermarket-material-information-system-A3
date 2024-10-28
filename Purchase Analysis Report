@@ -1,0 +1,24 @@
+import pandas as pd
+
+def purchase_analysis(file_path):
+    # Load purchase data
+    purchase_data = pd.read_csv(file_path)
+    
+    # Calculate overall on-time delivery rate (assuming 'OnTime' column has True/False values)
+    ontime_delivery_rate = purchase_data['OnTime'].mean() * 100
+    
+    # Aggregate supplier performance metrics
+    supplier_analysis = purchase_data.groupby('Supplier').agg({
+        'OrderID': 'count',
+        'OnTime': 'mean'
+    }).rename(columns={'OrderID': 'TotalOrders', 'OnTime': 'OnTimeRate'})
+    supplier_analysis['OnTimeRate'] = supplier_analysis['OnTimeRate'] * 100
+    
+    print("Purchase Analysis Report:")
+    print(f"Overall On-Time Delivery Rate: {ontime_delivery_rate:.2f}%")
+    print(supplier_analysis)
+    
+    return supplier_analysis
+
+# Example usage
+# purchase_analysis("purchases.csv")
