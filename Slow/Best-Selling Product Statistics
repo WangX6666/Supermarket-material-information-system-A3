@@ -1,0 +1,21 @@
+import pandas as pd
+
+def sales_performance_analysis(file_path, threshold=10):
+    # Load item sales data
+    item_data = pd.read_csv(file_path)
+    
+    # Classify products as best or slow sellers based on sales threshold
+    item_data['Performance'] = item_data['Sales'].apply(lambda x: 'Best Seller' if x > threshold else 'Slow Seller')
+    
+    # Summary of best and slow-selling products
+    performance_summary = item_data['Performance'].value_counts()
+    
+    print("Slow/Best-Selling Product Statistics:")
+    print(item_data[['Item', 'Sales', 'Performance']])
+    print("\nPerformance Summary:")
+    print(performance_summary)
+    
+    return item_data
+
+# Example usage
+# sales_performance_analysis("items.csv")
