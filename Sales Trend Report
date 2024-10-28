@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def sales_trend_report(file_path):
+    # Load sales data
+    sales_data = pd.read_csv(file_path)
+    
+    # Calculate monthly sales
+    sales_data['Date'] = pd.to_datetime(sales_data['Date'])
+    sales_data['Month'] = sales_data['Date'].dt.to_period('M')
+    monthly_sales = sales_data.groupby('Month')['Sales'].sum()
+    
+    print("Sales Trend Report:")
+    print(monthly_sales)
+    
+    # Visualization of sales trend
+    monthly_sales.plot(kind='line', title='Monthly Sales Trend', xlabel='Month', ylabel='Total Sales')
+    plt.show()
+
+    return monthly_sales
+
+# Example usage
+# sales_trend_report("sales.csv")
