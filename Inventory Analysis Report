@@ -1,0 +1,23 @@
+import pandas as pd
+
+def inventory_analysis(file_path, safety_stock=10):
+    # Load inventory data
+    inventory_data = pd.read_csv(file_path)
+    
+    # Calculate stock status
+    inventory_data['Status'] = inventory_data['Stock'].apply(lambda x: 'Low' if x < safety_stock else 'Sufficient')
+    
+    # Filter items with low stock levels
+    low_stock_items = inventory_data[inventory_data['Status'] == 'Low']
+    
+    print("Inventory Analysis Report:")
+    print(inventory_data)
+    print("\nLow Stock Items:")
+    print(low_stock_items)
+    
+    # Visualization (optional - use Matplotlib or other libraries)
+    # Save or export report if needed
+    return inventory_data
+
+# Example usage
+# inventory_analysis("inventory.csv")
